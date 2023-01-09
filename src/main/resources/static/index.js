@@ -32,5 +32,27 @@ angular.module('app', []).controller('indexController', function($scope, $http){
         });
     }
 
+    //добавить новый продукт
+    $scope.addProduct = function () {
+        $http.post(contextPath + '/products', $scope.newProduct)
+             .then(function(response) {
+                $scope.loadProducts();
+             });
+    }
+
+    $scope.findCostBetween = function() {
+        $http({
+            url: contextPath + '/products/cost_between',
+            method: 'GET',
+            params: {
+                min: $scope.productCost.min,
+                max: $scope.productCost.max
+            }
+        }).then(function (response) {
+            $scope.ProductsList = response.data;
+            $scope.productCost = null;
+        });
+    }
+
     $scope.loadProducts();
 });

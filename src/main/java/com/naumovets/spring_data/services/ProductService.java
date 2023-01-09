@@ -47,4 +47,8 @@ public class ProductService {
     public List<Product> findByCostGreaterThan(Integer value) {
         return productRepository.findByCostGreaterThan(value);
     }
+
+    public Product addNewProduct(Product product) {
+        return productRepository.save(product);
+    }
 }
