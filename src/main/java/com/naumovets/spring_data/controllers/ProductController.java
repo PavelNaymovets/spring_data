@@ -1,6 +1,7 @@
 package com.naumovets.spring_data.controllers;
 
 import com.naumovets.spring_data.entities.Product;
+import com.naumovets.spring_data.exceptions.ResourceNotFoundException;
 import com.naumovets.spring_data.services.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,7 @@ public class ProductController {
 
     @GetMapping("/products/{id}")
     public Product getProductById(@PathVariable Long id) {
-        return productService.findById(id).get();
+        return productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found, id: " + id));
     }
 
     @GetMapping("/products/delete/{id}")
