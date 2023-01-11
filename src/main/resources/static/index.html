@@ -49,13 +49,15 @@
     </form>
     <br>
     <h3>Фильтр продуктов</h3>
-    <form novalidate ng-submit="findCostBetween()">
-        <input class="form-control" type="text" placeholder="Минимальная цена" ng-model="productCost.min">
+    <form novalidate ng-submit="loadProducts()">
+        <input class="form-control" type="number" placeholder="Минимальная цена" ng-model="product.min_price">
         <p></p>
-        <input class="form-control" type="number" placeholder="Максимальная цена" ng-model="productCost.max">
+        <input class="form-control" type="number" placeholder="Максимальная цена" ng-model="product.max_price">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Имя продукта" ng-model="product.name_part">
         <p></p>
         <button type="submit" class="btn btn-primary">Фильтровать</button>
-        <button type="submit" class="btn btn-primary" ng-click="loadProducts()">Сбросить фильтр</button>
+        <button type="submit" class="btn btn-primary" ng-click="reload()">Сбросить фильтр</button>
     </form>
 </div>
 </body>
