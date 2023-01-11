@@ -2,7 +2,10 @@ package com.naumovets.spring_data.services;
 
 import com.naumovets.spring_data.entities.Product;
 import com.naumovets.spring_data.repositories.ProductRepository;
-import org.springframework.http.HttpStatus;
+import com.naumovets.spring_data.repositories.specifications.ProductSpecification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,8 +20,19 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public Page<Product> findAll(Integer minPrice, Integer maxPrice, String namePart, Integer page) {
+        Specification<Product> spec = Specification.where(null);
+        if (minPrice != null) {
+            spec = spec.and(ProductSpecification.priceGreaterOrEqualsThan(minPrice));
+        }
+        if (maxPrice != null) {
+            spec = spec.and(ProductSpecification.priceLessOrEqualsThan(maxPrice));
+        }
+        if (namePart != null) {
+            spec = spec.and(ProductSpecification.titleLike(namePart));
+        }
+
+        return productRepository.findAll(spec, PageRequest.of(page - 1, 5));
     }
 
     public Optional<Product> findById(Long id) {
