@@ -17,17 +17,42 @@ angular.module('app', []).controller('indexController', function($scope, $http){
         });
     }
 
+    //запрос списка продуктов из корзины
+    $scope.loadProductsCart = function () {
+        $http.get(contextPath + '/api/v1/products/cart')
+             .then(function (response) {
+                  console.log(response);
+                  $scope.ProductsListCart = response.data;
+        });
+    }
+
     //сбросить фильтр
-        $scope.reload = function () {
-            $scope.product = null;
-            $scope.loadProducts();
-        }
+    $scope.reload = function () {
+        $scope.product = null;
+        $scope.loadProducts();
+    }
 
     //удаление продукта из репозитория по id
     $scope.deleteProduct = function (productId) {
         $http.delete(contextPath + '/api/v1/products/' + productId)
              .then(function (response) {
                 $scope.loadProducts();
+             });
+    }
+
+    //удаление продукта из корзины по id
+    $scope.deleteProductCart = function (productId) {
+        $http.delete(contextPath + '/api/v1/products/cart/' + productId)
+             .then(function (response) {
+                $scope.loadProductsCart();
+             });
+    }
+
+    //добавление продукта в корзину по id
+    $scope.addProductCart = function (productId) {
+        $http.post(contextPath + '/api/v1/products/cart/' + productId)
+             .then(function (response) {
+                $scope.loadProductsCart();
              });
     }
 
@@ -54,4 +79,5 @@ angular.module('app', []).controller('indexController', function($scope, $http){
     }
 
     $scope.loadProducts();
+    $scope.loadProductsCart();
 });
