@@ -33,7 +33,31 @@
                 <button class="btn btn-primary" ng-click="changeQuantity(s.id, 5)">+</button>
             </td>
             <td>
-                <button class="btn btn-danger" ng-click="deleteProduct(s.id)">Убрать</button>
+                <button class="btn btn-danger" ng-click="addProductCart(s.id)">Добавить в корзину</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <h3>Корзина</h3>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>ID</td>
+            <td>Продукт</td>
+            <td>Цена</td>
+            <td>Убрать из корзины</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="s in ProductsListCart">
+            <td>{{s.id}}</td>
+            <td>{{s.title}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="changeQuantity(s.id, -5)">-</button>
+                {{s.cost}}
+                <button class="btn btn-primary" ng-click="changeQuantity(s.id, 5)">+</button>
+            </td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteProductCart(s.id)">Убрать из корзины</button>
             </td>
         </tr>
         </tbody>

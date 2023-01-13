@@ -1,9 +1,18 @@
 package com.naumovets.spring_data.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "products")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,31 +25,21 @@ public class Product {
     @Column(name = "cost")
     private int cost;
 
-    public Product(){
-
+    @Override
+    public String toString() {
+        return id + " " + title + " " + cost;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return cost == product.cost && id.equals(product.id) && Objects.equals(title, product.title);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, cost);
     }
 }
